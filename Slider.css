@@ -1,17 +1,5 @@
 .THIS.slideshow-container {
   position: relative;
-  /*********** Merge animation ************/
-  /*********** End of Merge animation ************/
-  /*********** Popup animation ************/
-  /*********** End of Popup animation ************/
-  /*********** Fade animation**************/
-  /*********** End of fade animation**************/
-  /*********** Vertical Sliding animation**************/
-  /*to end*/
-  /*********** End of Vertical Sliding animation**************/
-  /*********** Horizontal Sliding animation**************/
-  /*to end*/
-  /*********** End of Horizontal Sliding animation**************/
 }
 .THIS.slideshow-container .slides {
   overflow: hidden;
