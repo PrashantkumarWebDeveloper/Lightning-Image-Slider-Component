@@ -27,14 +27,21 @@
     <aura:attribute name="current" type="Integer" default="0" />
   
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    
+    <aura:handler name="change" value="{!v.imageArray}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.animType}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.autoMove}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.defaultDirection}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.duration}" action="{!c.handleChange}" />
     
     <div class="{!'slideshow-container ' + v.myGlobalClass}">
         <div class="slides">
+            <aura:if isTrue="{!v.imageArraySupport.length == 0}">
+                <div class="image message">Image Loading...</div>
+            </aura:if>
             <aura:iteration items="{!v.imageArraySupport}" var="image" indexVar="i">
-                <div class="{!'slide ' + ((image.active=='true')? 'active ': '')  + image.direction}">
+                <div class="{!'slide ' + ((image.active == true)? 'active ': '')  + image.direction}">
                     <div class="image" style="{!'background-image: url(' + image.src + ')'}" ></div>
-                    <div class="caption-text">{!image.caption}</div>
+                    <div class="caption-text" style="{!'display: ' + (v.showCaption == true ? 'block;':'none;')}">{!image.caption}</div>
                 </div>
             </aura:iteration>
             
@@ -46,7 +53,7 @@
         
         <div class="dot-group">
             <aura:iteration items="{!v.imageArraySupport}" var="image" indexVar="i">
-                <a id="{!i}" href="javascript:void(0);" class="{!'dot '+ ((image.active=='true')? 'active': '')}" onclick="{!c.moveToPosition}"></a>
+                <a id="{!i}" href="javascript:void(0);" class="{!'dot '+ ((image.active == true)? 'active': '')}" onclick="{!c.moveToPosition}"></a>
             </aura:iteration>
         </div>
     </div>
@@ -59,17 +66,32 @@
         {!'.'+v.myGlobalClass}.slideshow-container{
         height: {!v.height.small};   
         }
+        {!'.'+v.myGlobalClass} .image.message{
+        	line-height: calc({!v.height.small} - 45px);
+        	width:100%;
+        	text-align:center;
+        }
         }
         @media screen and (min-width: 768px) and (max-width: 992px)
         {
         {!'.'+v.myGlobalClass}.slideshow-container{
         height: {!v.height.medium};   
         }
+        {!'.'+v.myGlobalClass} .image.message{
+        	line-height: calc({!v.height.medium} - 45px);
+        	width:100%;
+        	text-align:center;
+        }
         }
         @media screen and (min-width: 992px)
         {
         {!'.'+v.myGlobalClass}.slideshow-container{
         height: {!v.height.large};   
+        }
+        {!'.'+v.myGlobalClass} .image.message{
+        	line-height: calc({!v.height.large} - 45px);
+        	width:100%;
+        	text-align:center;
         }
         }
         
