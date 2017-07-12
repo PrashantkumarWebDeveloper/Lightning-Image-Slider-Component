@@ -1,32 +1,58 @@
 ({
     intervalRef: null,
+    initializationHelper : function(component) {
+        	var helper = this;
+        	helper.handleAnimTypeChange(component);
+            var defaultDirection = component.get('v.defaultDirection');
+        	
+            var direction = component.get('v.'+defaultDirection);
+        	
+            component.set("v.current", 0);
+        	var current = component.get("v.current");
+            var duration = component.get('v.duration');
+            var autoMove = component.get('v.autoMove');
+            
+            helper.handleImageArrayChange(component);
+        	
+        	if(helper.intervalRef)
+            	clearInterval(helper.intervalRef);
+            
+        	if(autoMove)
+            {
+                setTimeout(function(){
+                    if(current == 0) {
+                        helper.moveTo(component, 1, direction);
+                    }
+                }, duration);
+            }
+            
+
+    },
 	moveTo : function(component, moveToPos, direction) {
-        var objRef = this;
+        var helper = this;
 		var autoMove = component.get('v.autoMove');
-        console.log('autoMove: ',autoMove);
         var imageArraySupport = component.get('v.imageArraySupport');
         var current = component.get('v.current');
         
-        if(objRef.intervalRef)
-            clearInterval(objRef.intervalRef);
+        if(helper.intervalRef)
+            clearInterval(helper.intervalRef);
         
-      	objRef.doMoveRelatedTask(component, imageArraySupport, current, moveToPos, direction);
+      	helper.doMoveRelatedTask(component, imageArraySupport, current, moveToPos, direction);
         
-        if(autoMove == "true") {
+        if(autoMove) {
             var duration = component.get('v.duration');
             var defaultDirection = component.get('v.defaultDirection');
         	var direction = component.get('v.'+defaultDirection);
             
-            objRef.intervalRef = setInterval(function(){
-                console.log('duration: ', duration);
+            helper.intervalRef = setInterval(function(){
                 if(moveToPos == imageArraySupport.length) {
                     var circular = component.get('v.circular');
-                    if(circular == "true")
+                    if(circular)
                         moveToPos = 0;
                     else
-                       clearInterval(objRef.intervalRef); 
+                       clearInterval(helper.intervalRef); 
                 }
-                objRef.doMoveRelatedTask(component, imageArraySupport, current, moveToPos, direction);
+                helper.doMoveRelatedTask(component, imageArraySupport, current, moveToPos, direction);
                 current = moveToPos;
                 moveToPos++;
             }, duration);
@@ -35,8 +61,8 @@
 	},
     doMoveRelatedTask : function(component, imageArraySupport, current, moveToPos, direction){
        
-        imageArraySupport[current].active = "false";
-        imageArraySupport[moveToPos].active = "true";
+        imageArraySupport[current].active = false;
+        imageArraySupport[moveToPos].active = true;
         
         for(var i in imageArraySupport){
             imageArraySupport[i].direction = 'none';
@@ -51,26 +77,25 @@
         var imageArraySupport = component.get('v.imageArraySupport');
         
         var showCaption = component.get('v.showCaption');
-        
+       
         for(var i in imageArray)
         {	var obj = {
             	src: imageArray[i].src,
             	direction: 'none',
-            	active: 'false',
+            	active: false,
             	caption: ''
         	}
-        	if(showCaption == "true")
-                obj.caption = imageArray[i].caption;
+        	if(showCaption)
+            	obj.caption = imageArray[i].caption;
             imageArraySupport[i] = obj;
         }
         imageArraySupport[0].direction = 'initial';
-        imageArraySupport[0].active = 'true';
+        imageArraySupport[0].active = true;
         component.set('v.imageArraySupport', imageArraySupport);
-        console.log('imageArraySupport: ',imageArraySupport);
+        
 	},
     handleAnimTypeChange : function(component){
         var animType = component.get('v.animType');
-        var defaultDirection = component.get('v.defaultDirection');
         var prev,next;
         if(animType == "horizontal-slide") {
             prev = "right";
