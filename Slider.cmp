@@ -10,12 +10,12 @@
     
     <aura:attribute name="showCaption" type="Boolean" default="true"
                     description="Whether caption will display or not."/>
-    <aura:attribute name="nevigation" type="String" default="horizontal" 
+    <aura:attribute name="navigation" type="String" default="horizontal" 
                     description="Position of prev, next buttons. Possible values are: horizontal and vertical" />
     <aura:attribute name="defaultDirection" type="String" default="next" 
                     description="Default direction(in the direction of next or prev button)" />  
     <aura:attribute name="autoMove" type="Boolean" default="true" />
-    <aura:attribute name="duration" type="Integer" default="10000" 
+    <aura:attribute name="duration" type="Integer" default="3000" 
                     description="Interval between slides in milliseconds" />
     <aura:attribute name="circular" type="Boolean" default="true" 
                     description="Whether slides continues after reaching end of image array"/>
@@ -40,12 +40,12 @@
             </aura:if>
             <aura:iteration items="{!v.imageArraySupport}" var="image" indexVar="i">
                 <div class="{!'slide ' + ((image.active == true)? 'active ': '')  + image.direction}">
-                    <div class="image" style="{!'background-image: url(' + image.src + ')'}" ></div>
+                    <div class="image" style="{!'background-image: url(\'' + image.src + '\')'}" ></div>
                     <div class="caption-text" style="{!'display: ' + (v.showCaption == true ? 'block;':'none;')}">{!image.caption}</div>
                 </div>
             </aura:iteration>
             
-            <div class="{!'nevigation '+ v.nevigation }">
+            <div class="{!'nevigation '+ v.navigation  }">
                 <a href="javascript:void(0);" class="prev" onclick="{!c.moveToPrev}">&#10094;</a>
                 <a href="javascript:void(0);" class="next" onclick="{!c.moveToNext}">&#10095;</a>
             </div>
