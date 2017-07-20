@@ -1,6 +1,6 @@
 # Lightning-Image-Slider-Component
 
-Check out the demo here: [Demo](https://prashantmeandev-developer-edition.ap2.force.com/)
+Check out the demo here: [Demo](https://prashantmeandev-developer-edition.ap2.force.com/#slider)
 
 ## Available options:
 ### Name: imageArray ### 
