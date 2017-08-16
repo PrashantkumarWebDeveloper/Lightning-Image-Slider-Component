@@ -1,4 +1,8 @@
 ({
+    swipeObject : {
+        start : {x : null, y : null},
+        end : {x : null, y : null}
+    },
     intervalRef: null,
     initializationHelper : function(component) {
         	var helper = this;
