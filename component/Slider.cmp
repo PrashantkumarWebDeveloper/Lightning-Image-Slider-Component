@@ -25,7 +25,7 @@
     <aura:attribute name="prev" type="String" />
     <aura:attribute name="next" type="String" />	
     <aura:attribute name="current" type="Integer" default="0" />
-  
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="change" value="{!v.imageArray}" action="{!c.handleChange}" />
     <aura:handler name="change" value="{!v.animType}" action="{!c.handleChange}" />
@@ -33,8 +33,12 @@
     <aura:handler name="change" value="{!v.defaultDirection}" action="{!c.handleChange}" />
     <aura:handler name="change" value="{!v.duration}" action="{!c.handleChange}" />
     
-    <div class="{!'slideshow-container ' + v.myGlobalClass}">
-        <div class="slides">
+    <aura:method name="movePrev" action="{!c.moveToPrev}"/>
+    <aura:method name="moveNext" action="{!c.moveToNext}"/>
+    
+    
+    <div class="{!'slideshow-container ' + v.myGlobalClass}" >
+        <div class="slides" ontouchstart="{!c.touchstart}" ontouchend="{!c.touchend}" ontouchmove="{!c.touchmove}" ontouchcancel="{!c.touchcancel}" >
             <aura:if isTrue="{!v.imageArraySupport.length == 0}">
                 <div class="image message">Image Loading...</div>
             </aura:if>
@@ -67,9 +71,9 @@
         height: {!v.height.small};   
         }
         {!'.'+v.myGlobalClass} .image.message{
-        	line-height: calc({!v.height.small} - 45px);
-        	width:100%;
-        	text-align:center;
+        line-height: calc({!v.height.small} - 45px);
+        width:100%;
+        text-align:center;
         }
         }
         @media screen and (min-width: 768px) and (max-width: 992px)
@@ -78,9 +82,9 @@
         height: {!v.height.medium};   
         }
         {!'.'+v.myGlobalClass} .image.message{
-        	line-height: calc({!v.height.medium} - 45px);
-        	width:100%;
-        	text-align:center;
+        line-height: calc({!v.height.medium} - 45px);
+        width:100%;
+        text-align:center;
         }
         }
         @media screen and (min-width: 992px)
@@ -89,9 +93,9 @@
         height: {!v.height.large};   
         }
         {!'.'+v.myGlobalClass} .image.message{
-        	line-height: calc({!v.height.large} - 45px);
-        	width:100%;
-        	text-align:center;
+        line-height: calc({!v.height.large} - 45px);
+        width:100%;
+        text-align:center;
         }
         }
         
