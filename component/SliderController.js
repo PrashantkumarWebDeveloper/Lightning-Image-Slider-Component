@@ -89,6 +89,47 @@
             helper.initializationHelper(component);
         }
         
+    },
+    touchstart : function(component, event, helper) {
+        helper.swipeObject.start.x = event.touches[0].pageX;
+        helper.swipeObject.start.y = event.touches[0].pageY;
+    },
+    touchend : function(component, event, helper) {
+        var obj = helper.swipeObject;
+        var navigation = component.get('v.navigation');
+        
+        if(navigation == 'horizontal'){
+            if((obj.end.x - obj.start.x)>0){
+                component.movePrev(); 
+            }
+            else if((obj.end.x - obj.start.x)<0){
+                component.moveNext();
+            }
+        }
+        if(navigation == 'vertical'){
+            if((obj.end.y - obj.start.y)>0){
+                component.moveNext();
+            }
+            else if((obj.end.y - obj.start.y)<0){
+                component.movePrev();
+            }
+        }
+        
+        helper.swipeObject.start.x = null;
+        helper.swipeObject.start.y = null;
+        helper.swipeObject.end.x = null;
+        helper.swipeObject.end.y = null;
+    },
+    touchmove : function(component, event, helper) {
+        helper.swipeObject.end.x = event.touches[0].pageX;
+        helper.swipeObject.end.y = event.touches[0].pageY;
+    },
+    touchcancel : function(component, event, helper) {
+        helper.swipeObject.start.x = null;
+        helper.swipeObject.start.y = null;
+        helper.swipeObject.end.x = null;
+        helper.swipeObject.end.y = null;
+        
     }
     
 })
