@@ -2,6 +2,8 @@
 
 Check out the demo here: [Demo](http://prashantmeandev-developer-edition.ap7.force.com/#slider)
 
+**Update 23rd July 2022:** Added support to configure this componnet using design attributes. Deploy to salesforce button. 
+
 ## Available options:
 ### Name: imageArray ### 
 
