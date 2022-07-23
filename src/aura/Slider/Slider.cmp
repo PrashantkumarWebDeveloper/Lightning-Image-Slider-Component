@@ -1,0 +1,108 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="myGlobalClass" type="String" />
+    <aura:attribute name="animType" type="String" default="horizontal-slide" />
+    <aura:attribute name="height" type="sObject" default="{
+                                                          'large' : '600px',
+                                                          'medium': '400px',
+                                                          'small' : '300px'
+                                                          }" />
+    <aura:attribute name="heightInLargeDevice" type="String" default="600px"/>
+    <aura:attribute name="heightInMediumDevice" type="String" default="400px"/>
+    <aura:attribute name="heightInSmallDevice" type="String" default="300px"/>
+    
+    <aura:attribute name="showCaption" type="Boolean" default="true"
+                    description="Whether caption will display or not."/>
+    <aura:attribute name="navigation" type="String" default="horizontal" 
+                    description="Position of prev, next buttons. Possible values are: horizontal and vertical" />
+    <aura:attribute name="defaultDirection" type="String" default="next" 
+                    description="Default direction(in the direction of next or prev button)" />  
+    <aura:attribute name="autoMove" type="Boolean" default="true" />
+    <aura:attribute name="duration" type="Integer" default="3000" 
+                    description="Interval between slides in milliseconds" />
+    <aura:attribute name="circular" type="Boolean" default="true" 
+                    description="Whether slides continues after reaching end of image array"/>
+    <aura:attribute name="imageArray" type="sObject[]"/>
+    <aura:attribute name="imageArrayStr" type="String" default="[{'src': 'https://prashantmeandev-developer-edition.ap7.force.com/resource/images/car2.jpg', 'caption': 'image1 caption'},{'src': 'https://prashantmeandev-developer-edition.ap7.force.com/resource/images/car3.jpg', 'caption': 'image2 caption'},{'src': 'https://prashantmeandev-developer-edition.ap7.force.com/resource/images/car4.jpg', 'caption': 'image4 caption'}]" />
+    
+    <aura:attribute name="imageArraySupport" type="sObject[]" />
+    <aura:attribute name="prev" type="String" />
+    <aura:attribute name="next" type="String" />	
+    <aura:attribute name="current" type="Integer" default="0" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.imageArray}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.animType}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.autoMove}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.defaultDirection}" action="{!c.handleChange}" />
+    <aura:handler name="change" value="{!v.duration}" action="{!c.handleChange}" />
+    
+    <aura:method name="movePrev" action="{!c.moveToPrev}"/>
+    <aura:method name="moveNext" action="{!c.moveToNext}"/>
+    
+    
+    <div class="{!'slideshow-container ' + v.myGlobalClass}" >
+        <div class="slides" ontouchstart="{!c.touchstart}" ontouchend="{!c.touchend}" ontouchmove="{!c.touchmove}" ontouchcancel="{!c.touchcancel}" >
+            <aura:if isTrue="{!v.imageArraySupport.length == 0}">
+                <div class="image message">Image Loading...</div>
+            </aura:if>
+            <aura:iteration items="{!v.imageArraySupport}" var="image" indexVar="i">
+                <div class="{!'slide ' + ((image.active == true)? 'active ': '')  + image.direction}">
+                    <div class="image" style="{!'background-image: url(\'' + image.src + '\')'}" ></div>
+                    <div class="caption-text" style="{!'display: ' + (v.showCaption == true ? 'block;':'none;')}">{!image.caption}</div>
+                </div>
+            </aura:iteration>
+            
+            <div class="{!'nevigation '+ v.navigation  }">
+                <a href="javascript:void(0);" class="prev" onclick="{!c.moveToPrev}">&#10094;</a>
+                <a href="javascript:void(0);" class="next" onclick="{!c.moveToNext}">&#10095;</a>
+            </div>
+        </div>
+        
+        <div class="dot-group">
+            <aura:iteration items="{!v.imageArraySupport}" var="image" indexVar="i">
+                <a id="{!i}" href="javascript:void(0);" class="{!'dot '+ ((image.active == true)? 'active': '')}" onclick="{!c.moveToPosition}"></a>
+            </aura:iteration>
+        </div>
+    </div>
+    
+    
+    
+    <style>
+        @media screen and (max-width: 768px)
+        {
+        {!'.'+v.myGlobalClass}.slideshow-container{
+        height: {!v.height.small};   
+        }
+        {!'.'+v.myGlobalClass} .image.message{
+        line-height: calc({!v.height.small} - 45px);
+        width:100%;
+        text-align:center;
+        }
+        }
+        @media screen and (min-width: 768px) and (max-width: 992px)
+        {
+        {!'.'+v.myGlobalClass}.slideshow-container{
+        height: {!v.height.medium};   
+        }
+        {!'.'+v.myGlobalClass} .image.message{
+        line-height: calc({!v.height.medium} - 45px);
+        width:100%;
+        text-align:center;
+        }
+        }
+        @media screen and (min-width: 992px)
+        {
+        {!'.'+v.myGlobalClass}.slideshow-container{
+        height: {!v.height.large};   
+        }
+        {!'.'+v.myGlobalClass} .image.message{
+        line-height: calc({!v.height.large} - 45px);
+        width:100%;
+        text-align:center;
+        }
+        }
+        
+        
+    </style>
+</aura:component>

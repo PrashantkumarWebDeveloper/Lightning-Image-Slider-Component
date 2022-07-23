@@ -1,0 +1,25 @@
+<design:component >
+    <design:attribute name="animType" label="Animation Type" default="horizontal-slide"
+                    datasource="horizontal-slide,vertical-slide,fade,popup,merge" />
+    <design:attribute name="showCaption" label="Show Caption" />
+    <design:attribute name="navigation" label="Navigation Button Alignment" datasource="horizontal,vertical" />
+    <design:attribute name="defaultDirection" label="Direction of slides movement (in respect to direction of navigations button)" datasource="next,prev" />
+    <design:attribute name="autoMove" label="Auto Move Slides"/>
+    <design:attribute name="duration" label="Interval Betwwin two slides in milliseconds" />
+    <design:attribute name="circular" label="Start with first slide after the last?" />
+    <design:attribute name="imageArrayStr" label="Image details in the JSON"
+                      description="JSON Array will be like: [
+                                   {src: 'image1 url', caption: 'image1 caption'},
+                                   {src: 'image2 url', caption: 'image2 caption'},
+                                   {src: 'image3 url', caption: 'image4 caption'}
+                                  ]" />
+    <design:attribute name = "heightInLargeDevice"
+                      label="Slider height in px for large devices like TV, value ex: 600px" />
+    <design:attribute name = "heightInMediumDevice"
+                      label="Slider height in px for large devices like Laptop, value ex: 400px" />
+    <design:attribute name = "heightInSmallDevice"
+                      label="Slider height in px for large devices like Phone, value ex: 300px" />
+                      
+    
+    
+</design:component>
