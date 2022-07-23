@@ -4,6 +4,11 @@ Check out the demo here: [Demo](http://prashantmeandev-developer-edition.ap7.for
 
 **Update 23rd July 2022:** Added support to configure this componnet using design attributes. Deploy to salesforce button. 
 
+<a href="https://githubsfdeploy.herokuapp.com">
+  <img alt="Deploy to Salesforce"
+       src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/deploy.png">
+</a>
+
 ## Available options:
 ### Name: imageArray ### 
 
